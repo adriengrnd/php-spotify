@@ -17,7 +17,7 @@ use App\Entity\Artist;
             if(!empty(($a->images))){
                 $image=$a->images[0]->url;
             }
-            $artist = new Artist($a->id,$a->name,$a->followers->total,$a->external_urls->spotify,$image,$a->genres);
+            $artist = new Artist($a->id,$a->name,$a->followers->total,$a->external_urls->spotify,$image,$a->genres,null);
             echo $artist->display();
         }
         ?>

@@ -33,7 +33,7 @@ class ArtistController extends Controller
         if(!empty($artist->images)){
             $image=$artist->images[0]->url;
         }
-        $art = new Artist($artist->id,$artist->name,$artist->followers->total,$artist->external_urls->spotify,$image,$artist->genres);
+        $art = new Artist($artist->id,$artist->name,$artist->followers->total,$artist->external_urls->spotify,$image,$artist->genres,null);
 
 
         $ch = curl_init();
@@ -49,6 +49,27 @@ class ArtistController extends Controller
         }
         $result = ['artist' => $art, 'albums'=>$albums];
         $this->render('artist/view', compact('result'));
+    }
+    public function addFav($id){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/artists/$id");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token'] ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $resultArtist = curl_exec($ch);
+        curl_close($ch);
+        $artist = json_decode($resultArtist);
+        $image = "https://upload.wikimedia.org/wikipedia/commons/c/ca/CD-ROM.png";
+        if(!empty($artist->images)){
+            $image=$artist->images[0]->url;
+        }
+        $art = new Artist($artist->id,$artist->name,$artist->followers->total,$artist->external_urls->spotify,$image,$artist->genres,null);
+        $art->create();
+        header('Location: /favoris/artist');
+    }
+    public function deleteFav($id){
+        $artisteQuery = new Artist('','',0,'','',null,null);
+        $artisteQuery->delete($id);
+        header('Location: /favoris/artist');
     }
 
 }

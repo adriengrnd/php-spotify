@@ -1,7 +1,7 @@
 <?php
 use App\Autoloader;
 use App\Entity\Artist;
-use App\Entity\Album
+use App\Entity\Album;
 ?>
 
 <div class="container">

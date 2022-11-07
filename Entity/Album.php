@@ -5,17 +5,17 @@ namespace App\Entity;
 class Album
 {
     public function __construct(
-        public string|null $id,
+        public string|null $idAlbum,
 
         public string|null $name,
 
-        public int|null  $tracks,
+        public int|null    $tracks,
 
         public string|null $link,
 
         public string|null $picture,
 
-        public string|null  $date,
+        public string|null $date,
     )
     {
     }
@@ -23,17 +23,17 @@ class Album
     /**
      * @return string|null
      */
-    public function getId(): ?string
+    public function getIdAlbum(): ?string
     {
-        return $this->id;
+        return $this->idAlbum;
     }
 
     /**
-     * @param string|null $id
+     * @param string|null $idAlbum
      */
-    public function setId(?string $id): void
+    public function setIdAlbum(?string $idAlbum): void
     {
-        $this->id = $id;
+        $this->idAlbum = $idAlbum;
     }
 
     /**
@@ -123,12 +123,24 @@ class Album
                     <img class="card-img-top" src="'.$this->getPicture().'" alt="'.$this->getName().'" width="380" height="380">
                     <div class="card-body">
                       <h5 class="card-title">'.$this->getName().' <small class="text-muted">('.$this->getTracks().')</small></h5>
-                      <p class="card-text"><a href="'.$this->getLink().'" class="btn btn-sm btn-success">->spotify</a> <a href="/album/view/'.$this->getId().'" class="btn btn-sm btn-primary">+</a></p>
+                      <p class="card-text"><a href="'.$this->getLink().'" class="btn btn-sm btn-success">->spotify</a> <a href="/album/view/'.$this->getIdAlbum().'" class="btn btn-sm btn-primary">+</a></p>
                     </div>
                     <div class="card-footer">
                       <small class="text-muted">'.$this->getDate().'</small>
                     </div>
                  </div>
+                 </div>';
+    }
+    public function displayLarge(): string
+    {
+        return'<div class="card m-2 " style="width: 50%">
+                    <img class="card-img-top" src="'.$this->getPicture().'" alt="'.$this->getName().'"  >
+                    <div class="card-body">
+                      <h5 class="card-title">'.$this->getName().' <small class="text-muted">('.$this->getTracks().')</small></h5>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">'.$this->getDate().'</small>
+                    </div>
                  </div>';
     }
 

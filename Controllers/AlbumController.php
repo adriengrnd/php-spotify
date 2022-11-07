@@ -17,7 +17,7 @@ class AlbumController extends Controller
         curl_close($ch);
         $jsonAlbum = json_decode($resultQuery);
         $album = new Album($jsonAlbum->id,$jsonAlbum->name, $jsonAlbum->total_tracks, $jsonAlbum->external_urls->spotify, $jsonAlbum->images[0]->url, $jsonAlbum->release_date);
-        echo $album->display();
+
         $tracks = array();
         foreach ($jsonAlbum->tracks->items as $track){
             $artistNames="";
@@ -28,10 +28,9 @@ class AlbumController extends Controller
                     $artistNames.=$artist->name.", ";
                 }
             }
-            $tracks[] = new Track($track->id, $track->name, $track->track_number, $track->external_urls->spotify, $track->duration_ms,$artistNames);
+            $tracks[] = new Track($track->id, $track->name, $track->track_number, $track->external_urls->spotify, $track->duration_ms,$artistNames,null);
         }
-        var_dump($tracks);
-        $result = "";
+        $result = ['album' => $album, 'tracks'=>$tracks];
         $this->render('album/view', compact('result'));
     }
 

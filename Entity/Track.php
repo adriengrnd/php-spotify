@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
-class Track
+use App\Core\Db;
+
+class Track extends Model
 {
     public function __construct(
-        public string|null $id,
+        public string|null $idTrack,
 
         public string|null $name,
 
-        public int|null  $number,
+        public int|null $number,
 
         public string|null $link,
 
@@ -17,24 +19,25 @@ class Track
 
         public string|null $artist,
 
+        public int|null $id,
     )
     {
     }
-
+    protected ?string $table = 'track';
     /**
      * @return string|null
      */
-    public function getId(): ?string
+    public function getIdTrack(): ?string
     {
-        return $this->id;
+        return $this->idTrack;
     }
 
     /**
-     * @param string|null $id
+     * @param string|null $idTrack
      */
-    public function setId(?string $id): void
+    public function setIdTrack(?string $idTrack): void
     {
-        $this->id = $id;
+        $this->idTrack = $idTrack;
     }
 
     /**
@@ -101,9 +104,6 @@ class Track
         $this->time = $time;
     }
 
-    public function display(): string{
-        return ''
-    }
 
     /**
      * @return string|null
@@ -119,5 +119,67 @@ class Track
     public function setArtist(?string $artist): void
     {
         $this->artist = $artist;
+    }
+
+    public function display(): string{
+        return '<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="https://www.samplelogic.com/wp-content/uploads/2021/03/cinematic-play-btn.png" alt="" style="width: 45px; height: 45px"
+                             class="rounded-circle" />
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">'.$this->getNumber().'. '.$this->getName().'</p>
+                            <p class="text-muted mb-0">'.$this->getArtist().'</p>
+                        </div>
+                    </div>
+                    <div>
+                        <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">'.$this->getFormatTime().'</a>
+                        <a href="/track/addFav/'.$this->getIdTrack().'" class="btn btn-sm btn-warning">Fav</a>
+                    </div>
+                </li>';
+    }
+    public function displayFav(): string{
+        return '<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="https://www.samplelogic.com/wp-content/uploads/2021/03/cinematic-play-btn.png" alt="" style="width: 45px; height: 45px"
+                             class="rounded-circle" />
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">'.$this->getNumber().'. '.$this->getName().'</p>
+                            <p class="text-muted mb-0">'.$this->getArtist().'</p>
+                        </div>
+                    </div>
+                    <div>
+                        <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">'.$this->getFormatTime().'</a>
+                        <a href="/track/deleteFav/'.$this->getId().'" class="btn btn-sm btn-warning">Supp</a>
+                    </div>
+                </li>';
+    }
+    public function getFormatTime(): string{
+        $input = $this->getTime();
+
+        $uSec = $input % 1000;
+        $input = floor($input / 1000);
+
+        $seconds = $input % 60;
+        $input = floor($input / 60);
+
+        $minutes = $input % 60;
+        $input = floor($input / 60);
+        return $minutes.':'.$seconds;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 }

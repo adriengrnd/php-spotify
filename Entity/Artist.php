@@ -2,33 +2,35 @@
 
 namespace App\Entity;
 
-class Artist
+class Artist extends Model
 {
 
     public function __construct(
-        public string|null $id,
+        public string|null $idArtist,
 
         public string|null $name,
 
-        public int|null    $followers,
+        public int|null $followers,
 
         public string|null $link,
 
         public string|null $picture,
 
         public array|null  $genders,
+
+        public int|null $id,
     )
     {
     }
-
-    public function getId(): string
+    protected ?string $table = 'artist';
+    public function getIdArtist(): string
     {
-        return $this->id;
+        return $this->idArtist;
     }
 
-    public function setId(string $id): self
+    public function setIdArtist(string $idArtist): self
     {
-        $this->id = $id;
+        $this->idArtist = $idArtist;
         return $this;
     }
 
@@ -87,7 +89,21 @@ class Artist
         $this->picture = $picture;
         return $this;
     }
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
     public function display(): string
     {
         return '<div class="col-md-4">
@@ -104,8 +120,8 @@ class Artist
                                 <p class="card-text"><small
                                             class="text-muted">' . number_format($this->getFollowers()) . ' followers</small>
                                 </p>
-                                <a href="' . $this->getLink() . '" target="_blank" class="btn btn-success btn-sm">-> Spotify</a>
-                                <a href="/artist/view/' . $this->getId() . '" class="btn btn-primary btn-sm">+</a>
+                                <a href="/artist/addFav/' . $this->getIdArtist() . '" class="btn btn-warning btn-sm">favori</a>
+                                <a href="/artist/view/' . $this->getIdArtist() . '" class="btn btn-primary btn-sm">+</a>
 
                             </div>
                         </div>
@@ -135,4 +151,31 @@ class Artist
                     </div>
                 </div>';
     }
+    public function displayFav():string
+    {
+        return '<div class="col-md-4">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="' . $this->getPicture() . '" class="img-fluid rounded-start"
+                                 alt="' . $this->getName() . '">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">' . $this->getName() . '</h5>
+                                <p class="card-text"></p>
+                                <p class="card-text"><small
+                                            class="text-muted">' . number_format($this->getFollowers()) . ' followers</small>
+                                </p>
+                                <a href="/artist/deleteFav/' . $this->getId() . '" class="btn btn-warning btn-sm">Supp</a>
+                                <a href="/artist/view/' . $this->getIdArtist() . '" class="btn btn-primary btn-sm">+</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+    }
+
+
 }
