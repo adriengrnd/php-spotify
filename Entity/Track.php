@@ -149,7 +149,7 @@ class Track extends Model
                     </div>
                     <div>
                         <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">'.$this->getFormatTime().'</a>
-                        <a href="/track/deleteFav/'.$this->getId().'" class="btn btn-sm btn-warning">Supp</a>
+                        <a href="/track/deleteFav/'.$this->getId().'" class="btn btn-sm btn-danger">Supp</a>
                     </div>
                 </li>';
     }

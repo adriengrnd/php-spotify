@@ -24,7 +24,8 @@ class TrackController extends Controller
             }
         }
         $trackFav= new Track($track->id, $track->name, $track->track_number, $track->external_urls->spotify, $track->duration_ms,$artistNames,null);
-        $trackFav->create();
+        $compare = $trackFav->findBy(['idTrack'=>$trackFav->idTrack]);
+        if($compare==null)$trackFav->create();
         header('Location: /favoris/track');
 
     }

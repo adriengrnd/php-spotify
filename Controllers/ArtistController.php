@@ -63,7 +63,9 @@ class ArtistController extends Controller
             $image=$artist->images[0]->url;
         }
         $art = new Artist($artist->id,$artist->name,$artist->followers->total,$artist->external_urls->spotify,$image,$artist->genres,null);
-        $art->create();
+        $compare = $art->findBy(['idArtist'=>$art->getIdArtist()]);
+        if($compare==null) $art->create();
+
         header('Location: /favoris/artist');
     }
     public function deleteFav($id){

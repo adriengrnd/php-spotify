@@ -167,7 +167,7 @@ class Artist extends Model
                                 <p class="card-text"><small
                                             class="text-muted">' . number_format($this->getFollowers()) . ' followers</small>
                                 </p>
-                                <a href="/artist/deleteFav/' . $this->getId() . '" class="btn btn-warning btn-sm">Supp</a>
+                                <a href="/artist/deleteFav/' . $this->getId() . '" class="btn btn-danger btn-sm">Supp</a>
                                 <a href="/artist/view/' . $this->getIdArtist() . '" class="btn btn-primary btn-sm">+</a>
 
                             </div>
